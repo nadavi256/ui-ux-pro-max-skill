@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>קליקל - הסדין שלך לעולם לא יקפוץ יותר</title>
+  <meta name="description" content="קליקל - הפטנט הישראלי שפותר את הבעיה שהסדין קופץ מהמיטה במהלך הלילה. שנה נעימה, לילה אחר לילה." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Rubik', 'sans-serif'],
+            body: ['Nunito Sans', 'sans-serif'],
+          },
+          colors: {
+            primary: '#1E293B',
+            secondary: '#334155',
+            cta: '#22C55E',
+            bg: '#0F172A',
+            surface: '#1E293B',
+            'surface-2': '#334155',
+            accent: '#3B82F6',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease forwards',
+            'fade-in': 'fadeIn 0.5s ease forwards',
+            float: 'float 3s ease-in-out infinite',
+            pulse2: 'pulse2 2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              from: { opacity: '0' },
+              to: { opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulse2: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(34,197,94,0.4)' },
+              '50%': { boxShadow: '0 0 0 12px rgba(34,197,94,0)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background-color: #0F172A;
+      color: #F8FAFC;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #22C55E 0%, #3B82F6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-glow {
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34,197,94,0.15) 0%, transparent 60%);
+    }
+
+    .card-glow:hover {
+      box-shadow: 0 0 30px rgba(34,197,94,0.15);
+    }
+
+    .btn-cta {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .btn-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.1);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .btn-cta:hover::before { transform: translateX(0); }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34,197,94,0.4); }
+    .btn-cta:active { transform: translateY(0); }
+
+    .nav-blur {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bed-illustration {
+      position: relative;
+    }
+
+    .sheet-bad {
+      animation: sheetBounce 3s ease-in-out infinite;
+    }
+    @keyframes sheetBounce {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      30% { transform: rotate(-3deg) translateY(-8px); }
+      60% { transform: rotate(2deg) translateY(-4px); }
+    }
+
+    .sheet-good {
+      animation: sheetStay 0.5s ease forwards;
+    }
+    @keyframes sheetStay {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .star { color: #F59E0B; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-item.open .faq-content {
+      max-height: 200px;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-icon {
+      transition: transform 0.25s ease;
+    }
+
+    .comparison-check { color: #22C55E; }
+    .comparison-x { color: #EF4444; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50" role="navigation" aria-label="תפריט ראשי">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="#" class="font-heading font-800 text-2xl text-white tracking-tight">
+        קליקל<span class="text-cta">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#how" class="hover:text-white transition-colors duration-200 cursor-pointer">איך זה עובד</a>
+        <a href="#benefits" class="hover:text-white transition-colors duration-200 cursor-pointer">יתרונות</a>
+        <a href="#testimonials" class="hover:text-white transition-colors duration-200 cursor-pointer">ביקורות</a>
+        <a href="#faq" class="hover:text-white transition-colors duration-200 cursor-pointer">שאלות</a>
+      </div>
+      <a href="#buy" class="btn-cta bg-cta text-white font-heading font-semibold text-sm px-5 py-2.5 rounded-full cursor-pointer">
+        להזמנה
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero-glow min-h-screen flex items-center pt-20 pb-16 px-4 sm:px-6" aria-labelledby="hero-title">
+    <div class="max-w-6xl mx-auto w-full">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Text -->
+        <div class="order-2 lg:order-1">
+          <div class="inline-flex items-center gap-2 bg-surface border border-white/10 rounded-full px-4 py-1.5 text-sm text-slate-300 mb-6">
+            <span class="w-2 h-2 rounded-full bg-cta animate-pulse"></span>
+            פטנט ישראלי רשום
+          </div>
+
+          <h1 id="hero-title" class="font-heading font-black text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
+            הסדין שלך<br />
+            <span class="gradient-text">לעולם לא יקפוץ</span><br />
+            יותר
+          </h1>
+
+          <p class="text-slate-300 text-lg sm:text-xl leading-relaxed mb-8 max-w-lg">
+            נמאס לכם להתעורר באמצע הלילה עם סדין שקפץ מהמיטה?
+            קליקל הוא הפיתרון החכם והפשוט שפתר את הבעיה הזו אחת ולתמיד.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-10">
+            <a href="#buy" class="btn-cta bg-cta text-white font-heading font-bold text-lg px-8 py-4 rounded-2xl cursor-pointer text-center">
+              להזמנה עכשיו
+              <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </a>
+            <a href="#how" class="flex items-center justify-center gap-2 text-white font-medium border border-white/20 px-8 py-4 rounded-2xl hover:bg-white/5 transition-colors duration-200 cursor-pointer">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              איך זה עובד
+            </a>
+          </div>
+
+          <!-- Social proof mini -->
+          <div class="flex items-center gap-4">
+            <div class="flex -space-x-2 space-x-reverse">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 border-2 border-bg flex items-center justify-center text-xs font-bold">מ</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 border-2 border-bg flex items-center justify-center text-xs font-bold">ש</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-400 border-2 border-bg flex items-center justify-center text-xs font-bold">ד</div>
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-400 to-teal-400 border-2 border-bg flex items-center justify-center text-xs font-bold">נ</div>
+            </div>
+            <div>
+              <div class="flex gap-0.5">
+                <span class="star text-lg" aria-hidden="true">★</span>
+                <span class="star text-lg" aria-hidden="true">★</span>
+                <span class="star text-lg" aria-hidden="true">★</span>
+                <span class="star text-lg" aria-hidden="true">★</span>
+                <span class="star text-lg" aria-hidden="true">★</span>
+              </div>
+              <p class="text-sm text-slate-400">+2,000 לקוחות מרוצים</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Illustration -->
+        <div class="order-1 lg:order-2 flex justify-center">
+          <div class="relative w-full max-w-md animate-float" aria-hidden="true">
+            <!-- Bed SVG Illustration -->
+            <svg viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+              <!-- Bed Frame -->
+              <rect x="20" y="200" width="380" height="80" rx="8" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+              <!-- Headboard -->
+              <rect x="20" y="140" width="380" height="70" rx="12" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+              <!-- Mattress -->
+              <rect x="30" y="165" width="360" height="40" rx="6" fill="#334155"/>
+              <!-- Pillow -->
+              <rect x="280" y="155" width="110" height="50" rx="20" fill="#475569"/>
+              <rect x="40" y="155" width="110" height="50" rx="20" fill="#475569"/>
+              <!-- Sheet - GOOD (stays on) -->
+              <rect x="30" y="160" width="360" height="50" rx="6" fill="#22C55E" opacity="0.9"/>
+              <!-- Sheet corners clipped -->
+              <path d="M30 205 Q30 210 36 210 L384 210 Q390 210 390 205 L390 160 Q390 160 384 166 L36 166 Q30 166 30 160 Z" fill="#16A34A" opacity="0.6"/>
+              <!-- Clickl clips illustration -->
+              <circle cx="36" cy="208" r="10" fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+              <circle cx="384" cy="208" r="10" fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+              <circle cx="36" cy="162" r="10" fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+              <circle cx="384" cy="162" r="10" fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+              <!-- Check marks on clips -->
+              <path d="M31 208 L35 212 L42 204" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M379 208 L383 212 L390 204" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Legs -->
+              <rect x="30" y="272" width="20" height="30" rx="4" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+              <rect x="370" y="272" width="20" height="30" rx="4" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+              <!-- Glow under bed -->
+              <ellipse cx="210" cy="305" rx="160" ry="10" fill="#22C55E" opacity="0.12"/>
+            </svg>
+
+            <!-- Badge floating -->
+            <div class="absolute top-4 left-0 bg-surface border border-white/10 rounded-2xl px-4 py-3 shadow-xl">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-cta" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm font-semibold text-white">הסדין נשאר!</span>
+              </div>
+            </div>
+
+            <!-- Badge floating 2 -->
+            <div class="absolute bottom-8 right-0 bg-surface border border-white/10 rounded-2xl px-4 py-3 shadow-xl">
+              <p class="text-xs text-slate-400">שינה נעימה</p>
+              <p class="text-lg font-heading font-bold text-cta">כל לילה</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROBLEM ===== -->
+  <section class="py-20 px-4 sm:px-6 border-t border-white/5 section-reveal" id="problem">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-6">
+        מכירים את הסיטואציה הזו?
+      </h2>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-14">
+        מתעוררים באמצע הלילה, קר, מבולבלים — והסדין שוב קפץ מהמיטה. שוב.
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        <!-- Pain 1 -->
+        <div class="bg-surface border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300">
+          <div class="w-12 h-12 bg-red-500/15 rounded-2xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-xl mb-2">מתעוררים בקור</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">הסדין קופץ, אתם מתקררים ומתעוררים באמצע השינה הכי עמוקה.</p>
+        </div>
+        <!-- Pain 2 -->
+        <div class="bg-surface border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300">
+          <div class="w-12 h-12 bg-amber-500/15 rounded-2xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-xl mb-2">מסדרים שוב ושוב</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">כל בוקר אותו סבל — מכניסים את הסדין מחדש מתחת למזרן. שעוות בינוי.</p>
+        </div>
+        <!-- Pain 3 -->
+        <div class="bg-surface border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300">
+          <div class="w-12 h-12 bg-purple-500/15 rounded-2xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-xl mb-2">שינה לא רציפה</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">שינה לא איכותית פוגעת בריכוז, במצב הרוח ובבריאות הכללית.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="how" class="py-20 px-4 sm:px-6 section-reveal">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-cta text-sm font-semibold uppercase tracking-widest mb-3">הפיתרון</p>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">
+          איך קליקל עובד?
+        </h2>
+        <p class="text-slate-400 text-lg max-w-xl mx-auto">
+          שלוש שניות, ואתם ישנים בשקט. לתמיד.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="relative text-right">
+          <div class="w-14 h-14 bg-gradient-to-br from-cta/30 to-cta/10 border border-cta/30 rounded-2xl flex items-center justify-center mb-5">
+            <span class="font-heading font-black text-2xl text-cta">1</span>
+          </div>
+          <h3 class="font-heading font-bold text-white text-xl mb-3">מניחים את הסדין</h3>
+          <p class="text-slate-400 leading-relaxed">פורשים את הסדין על המיטה כרגיל, ממש כמו תמיד.</p>
+          <div class="hidden md:block absolute top-7 left-0 w-full h-px border-t border-dashed border-white/15" style="left: -50%; width: 100%;"></div>
+        </div>
+        <!-- Step 2 -->
+        <div class="text-right">
+          <div class="w-14 h-14 bg-gradient-to-br from-blue-500/30 to-blue-500/10 border border-blue-500/30 rounded-2xl flex items-center justify-center mb-5">
+            <span class="font-heading font-black text-2xl text-blue-400">2</span>
+          </div>
+          <h3 class="font-heading font-bold text-white text-xl mb-3">מחברים את קליקל</h3>
+          <p class="text-slate-400 leading-relaxed">מצמידים את קליקל לפינות הסדין — מנגנון ה-Click הפטנטי נועל אותו במקום.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="text-right">
+          <div class="w-14 h-14 bg-gradient-to-br from-purple-500/30 to-purple-500/10 border border-purple-500/30 rounded-2xl flex items-center justify-center mb-5">
+            <span class="font-heading font-black text-2xl text-purple-400">3</span>
+          </div>
+          <h3 class="font-heading font-bold text-white text-xl mb-3">ישנים בשקט</h3>
+          <p class="text-slate-400 leading-relaxed">הסדין נשאר במקום כל הלילה. בכל תנוחה. בכל גודל מזרן.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BENEFITS ===== -->
+  <section id="benefits" class="py-20 px-4 sm:px-6 bg-surface/30 section-reveal">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-cta text-sm font-semibold uppercase tracking-widest mb-3">למה קליקל</p>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">
+          יתרונות שתרגישו מהלילה הראשון
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Benefit cards -->
+        <div class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300 cursor-default">
+          <div class="w-11 h-11 bg-cta/15 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-cta" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-lg mb-2">מתאים לכל גודל</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">תואם למזרנים בכל הגדלים — יחיד, זוגי, קינג ואף סופר-קינג.</p>
+        </div>
+
+        <div class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300 cursor-default">
+          <div class="w-11 h-11 bg-blue-500/15 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-lg mb-2">התקנה תוך שניות</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">ללא כלים, ללא הוראות מסובכות. לוחצים ומתחברים.</p>
+        </div>
+
+        <div class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300 cursor-default">
+          <div class="w-11 h-11 bg-amber-500/15 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-lg mb-2">חומרים פרמיום</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">עשוי מחומרים עמידים ואיכותיים שמחזיקים לאורך שנים.</p>
+        </div>
+
+        <div class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300 cursor-default">
+          <div class="w-11 h-11 bg-pink-500/15 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-lg mb-2">לא פוגע בסדינים</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">עיצוב ידידותי לבד — לא קורע, לא משאיר סימנים.</p>
+        </div>
+
+        <div class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300 cursor-default">
+          <div class="w-11 h-11 bg-teal-500/15 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-lg mb-2">פטנט מוגן</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">מנגנון ייחודי וממוצא ישראלי בעל פטנט רשום.</p>
+        </div>
+
+        <div class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300 cursor-default">
+          <div class="w-11 h-11 bg-orange-500/15 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-white text-lg mb-2">משלוח מהיר</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">משלוח לכל הארץ תוך 2-3 ימי עסקים עם מעקב בזמן אמת.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPARISON ===== -->
+  <section class="py-20 px-4 sm:px-6 section-reveal">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">
+          קליקל מול הפיתרונות האחרים
+        </h2>
+        <p class="text-slate-400 text-lg">למה כל שאר הניסיונות לא עבדו</p>
+      </div>
+
+      <div class="overflow-x-auto rounded-3xl border border-white/10">
+        <table class="w-full text-right min-w-[500px]" role="table">
+          <thead>
+            <tr class="bg-surface">
+              <th class="p-4 font-heading font-semibold text-white text-right" scope="col">פיתרון</th>
+              <th class="p-4 font-heading font-semibold text-white text-center" scope="col">עובד לאורך זמן</th>
+              <th class="p-4 font-heading font-semibold text-white text-center" scope="col">קל לשימוש</th>
+              <th class="p-4 font-heading font-semibold text-white text-center" scope="col">לא פוגע בסדין</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-white/8 bg-cta/8">
+              <td class="p-4 font-heading font-bold text-cta">קליקל</td>
+              <td class="p-4 text-center"><span class="comparison-check text-xl font-bold" aria-label="כן">✓</span></td>
+              <td class="p-4 text-center"><span class="comparison-check text-xl font-bold" aria-label="כן">✓</span></td>
+              <td class="p-4 text-center"><span class="comparison-check text-xl font-bold" aria-label="כן">✓</span></td>
+            </tr>
+            <tr class="border-t border-white/8">
+              <td class="p-4 text-slate-300">סיכות ביטחון</td>
+              <td class="p-4 text-center"><span class="comparison-x text-xl font-bold" aria-label="לא">✗</span></td>
+              <td class="p-4 text-center"><span class="comparison-x text-xl font-bold" aria-label="לא">✗</span></td>
+              <td class="p-4 text-center"><span class="comparison-x text-xl font-bold" aria-label="לא">✗</span></td>
+            </tr>
+            <tr class="border-t border-white/8">
+              <td class="p-4 text-slate-300">גומיות מיוחדות</td>
+              <td class="p-4 text-center"><span class="comparison-x text-xl font-bold" aria-label="לא">✗</span></td>
+              <td class="p-4 text-center"><span class="comparison-check text-xl font-bold" aria-label="כן">✓</span></td>
+              <td class="p-4 text-center"><span class="comparison-x text-xl font-bold" aria-label="לא">✗</span></td>
+            </tr>
+            <tr class="border-t border-white/8">
+              <td class="p-4 text-slate-300">סדינים יקרים</td>
+              <td class="p-4 text-center"><span class="comparison-x text-xl font-bold" aria-label="לא">✗</span></td>
+              <td class="p-4 text-center"><span class="comparison-check text-xl font-bold" aria-label="כן">✓</span></td>
+              <td class="p-4 text-center"><span class="comparison-check text-xl font-bold" aria-label="כן">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section id="testimonials" class="py-20 px-4 sm:px-6 bg-surface/30 section-reveal">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-cta text-sm font-semibold uppercase tracking-widest mb-3">ביקורות</p>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">
+          מה אומרים הלקוחות שלנו
+        </h2>
+        <div class="flex items-center justify-center gap-2">
+          <div class="flex gap-0.5">
+            <span class="star text-2xl" aria-hidden="true">★</span>
+            <span class="star text-2xl" aria-hidden="true">★</span>
+            <span class="star text-2xl" aria-hidden="true">★</span>
+            <span class="star text-2xl" aria-hidden="true">★</span>
+            <span class="star text-2xl" aria-hidden="true">★</span>
+          </div>
+          <span class="text-slate-400 font-medium">4.9 מתוך 5 (2,000+ ביקורות)</span>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Testimonial 1 -->
+        <article class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300">
+          <div class="flex gap-0.5 mb-4">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          </div>
+          <blockquote class="text-slate-300 leading-relaxed mb-5">
+            "סוף סוף פיתרון שעובד! הייתי סקפטית בהתחלה אבל מאז שקיבלתי את קליקל לא נאלצתי לסדר את הסדין אפילו פעם אחת."
+          </blockquote>
+          <footer class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center font-bold text-white" aria-hidden="true">מ</div>
+            <div>
+              <p class="font-semibold text-white text-sm">מיכל כהן</p>
+              <p class="text-xs text-slate-500">תל אביב</p>
+            </div>
+          </footer>
+        </article>
+
+        <!-- Testimonial 2 -->
+        <article class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300">
+          <div class="flex gap-0.5 mb-4">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          </div>
+          <blockquote class="text-slate-300 leading-relaxed mb-5">
+            "קנינו לכל חדרי השינה בבית. המחיר שווה כל שקל — אין לי מילים לתאר כמה זה שיפר את איכות השינה שלנו."
+          </blockquote>
+          <footer class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-teal-400 flex items-center justify-center font-bold text-white" aria-hidden="true">ד</div>
+            <div>
+              <p class="font-semibold text-white text-sm">דוד לוי</p>
+              <p class="text-xs text-slate-500">ירושלים</p>
+            </div>
+          </footer>
+        </article>
+
+        <!-- Testimonial 3 -->
+        <article class="bg-bg border border-white/8 rounded-3xl p-6 text-right card-glow transition-all duration-300">
+          <div class="flex gap-0.5 mb-4">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          </div>
+          <blockquote class="text-slate-300 leading-relaxed mb-5">
+            "הזמנתי כמתנה לאמא שלי שתמיד התלוננה על הסדין. היא מתקשרת אלי כל שבוע להגיד תודה. ממליצה בחום!"
+          </blockquote>
+          <footer class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-400 flex items-center justify-center font-bold text-white" aria-hidden="true">ש</div>
+            <div>
+              <p class="font-semibold text-white text-sm">שרה אברהם</p>
+              <p class="text-xs text-slate-500">חיפה</p>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BUY / CTA ===== -->
+  <section id="buy" class="py-24 px-4 sm:px-6 section-reveal">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-gradient-to-br from-surface to-surface-2 border border-white/10 rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden">
+        <!-- Glow bg -->
+        <div class="absolute inset-0 bg-gradient-to-br from-cta/5 to-blue-500/5 pointer-events-none" aria-hidden="true"></div>
+
+        <div class="relative">
+          <p class="text-cta text-sm font-semibold uppercase tracking-widest mb-4">הזמנה</p>
+          <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-3">
+            מוכנים לישון בשקט?
+          </h2>
+          <p class="text-slate-400 text-lg mb-8 max-w-lg mx-auto">
+            הצטרפו ל-2,000+ לקוחות מרוצים שכבר נהנים משינה נעימה כל לילה.
+          </p>
+
+          <!-- Price -->
+          <div class="inline-flex items-baseline gap-2 mb-8">
+            <span class="font-heading font-black text-5xl text-white">₪89</span>
+            <span class="text-slate-400 line-through text-xl">₪129</span>
+            <span class="bg-cta/20 text-cta text-sm font-semibold px-3 py-1 rounded-full">חיסכון 31%</span>
+          </div>
+
+          <div class="mb-6">
+            <a href="https://clickl.co.il" target="_blank" rel="noopener noreferrer"
+               class="btn-cta inline-block bg-cta text-white font-heading font-bold text-xl px-12 py-5 rounded-2xl cursor-pointer animate-pulse2">
+              להזמנה עכשיו
+            </a>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
+            <div class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-cta flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              משלוח חינם
+            </div>
+            <div class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-cta flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              30 יום אחריות
+            </div>
+            <div class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-cta flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              תשלום מאובטח
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="py-20 px-4 sm:px-6 section-reveal">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">שאלות נפוצות</h2>
+      </div>
+
+      <div class="space-y-3">
+        <!-- FAQ Item -->
+        <div class="faq-item bg-surface border border-white/8 rounded-2xl overflow-hidden">
+          <button
+            class="w-full flex items-center justify-between p-5 text-right cursor-pointer"
+            onclick="toggleFAQ(this)"
+            aria-expanded="false"
+          >
+            <span class="font-heading font-semibold text-white">לאיזה גדלי מזרן קליקל מתאים?</span>
+            <svg class="faq-icon w-5 h-5 text-slate-400 flex-shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-content">
+            <p class="px-5 pb-5 text-slate-400 leading-relaxed">קליקל תואם לכל גדלי המזרן הנפוצים — מיטת יחיד (80/90 ס"מ), מיטה זוגית (140/160 ס"מ), קינג (180 ס"מ) וסופר-קינג (200 ס"מ). המנגנון גמיש ומתאים לעובי מזרן של 15-35 ס"מ.</p>
+          </div>
+        </div>
+
+        <div class="faq-item bg-surface border border-white/8 rounded-2xl overflow-hidden">
+          <button
+            class="w-full flex items-center justify-between p-5 text-right cursor-pointer"
+            onclick="toggleFAQ(this)"
+            aria-expanded="false"
+          >
+            <span class="font-heading font-semibold text-white">האם קליקל ייגרום נזק לסדין שלי?</span>
+            <svg class="faq-icon w-5 h-5 text-slate-400 flex-shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-content">
+            <p class="px-5 pb-5 text-slate-400 leading-relaxed">לא. קליקל עוצב במיוחד כך שלא יפגע בבד הסדין. המנגנון מחלק את הלחץ באופן שווה ומשתמש בחומרים עדינים שלא ישאירו סימנים או יגרמו לפריצת חורים.</p>
+          </div>
+        </div>
+
+        <div class="faq-item bg-surface border border-white/8 rounded-2xl overflow-hidden">
+          <button
+            class="w-full flex items-center justify-between p-5 text-right cursor-pointer"
+            onclick="toggleFAQ(this)"
+            aria-expanded="false"
+          >
+            <span class="font-heading font-semibold text-white">כמה קל לחבר ולנתק את קליקל?</span>
+            <svg class="faq-icon w-5 h-5 text-slate-400 flex-shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-content">
+            <p class="px-5 pb-5 text-slate-400 leading-relaxed">מאוד קל! לוחצים — ומתחבר. לוחצים שוב — ומתנתק. התהליך כולו לוקח פחות מ-10 שניות לכל הפינות יחד. מושלם גם לכביסה שבועית.</p>
+          </div>
+        </div>
+
+        <div class="faq-item bg-surface border border-white/8 rounded-2xl overflow-hidden">
+          <button
+            class="w-full flex items-center justify-between p-5 text-right cursor-pointer"
+            onclick="toggleFAQ(this)"
+            aria-expanded="false"
+          >
+            <span class="font-heading font-semibold text-white">מה כוללת ערכת קליקל אחת?</span>
+            <svg class="faq-icon w-5 h-5 text-slate-400 flex-shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-content">
+            <p class="px-5 pb-5 text-slate-400 leading-relaxed">כל ערכה כוללת 4 יחידות קליקל (אחת לכל פינה) + הוראות שימוש. מספיק למיטה אחת. לרכישת יותר ממיטה אחת ניתן להזמין כמה ערכות בהנחה.</p>
+          </div>
+        </div>
+
+        <div class="faq-item bg-surface border border-white/8 rounded-2xl overflow-hidden">
+          <button
+            class="w-full flex items-center justify-between p-5 text-right cursor-pointer"
+            onclick="toggleFAQ(this)"
+            aria-expanded="false"
+          >
+            <span class="font-heading font-semibold text-white">מה מדיניות ההחזרות?</span>
+            <svg class="faq-icon w-5 h-5 text-slate-400 flex-shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-content">
+            <p class="px-5 pb-5 text-slate-400 leading-relaxed">אנחנו בטוחים שתאהבו את קליקל, לכן אנחנו מציעים 30 יום להחזרה ללא שאלות. אם מסיבה כלשהי לא הייתם מרוצים — נחזיר את מלוא הכסף.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-white/8 py-10 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+      <p class="font-heading font-bold text-white text-xl">
+        קליקל<span class="text-cta">.</span>
+      </p>
+      <p>© 2024 קליקל. כל הזכויות שמורות. פטנט ישראלי רשום.</p>
+      <a href="https://clickl.co.il" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-200 cursor-pointer">
+        clickl.co.il
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
+
+    // FAQ toggle
+    function toggleFAQ(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
