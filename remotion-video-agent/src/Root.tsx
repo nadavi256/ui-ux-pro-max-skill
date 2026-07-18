@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Composition } from "remotion";
 import { HelloWorld } from "./HelloWorld";
-import { Reel, reelDurationInFrames } from "./Reel";
+import { SaveTheDate, totalDurationInFrames } from "./SaveTheDate";
 
 export const RemotionRoot: FC = () => {
   return (
@@ -19,9 +19,9 @@ export const RemotionRoot: FC = () => {
         }}
       />
       <Composition
-        id="Reel"
-        component={Reel}
-        durationInFrames={reelDurationInFrames}
+        id="SaveTheDate"
+        component={SaveTheDate}
+        durationInFrames={totalDurationInFrames}
         fps={24}
         width={720}
         height={1280}
