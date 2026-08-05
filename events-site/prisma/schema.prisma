@@ -1,0 +1,96 @@
+// Prisma schema for the events promotion / affiliate platform.
+// Dev uses SQLite (file-based, zero setup). For production, switch the
+// datasource provider to "postgresql" and set DATABASE_URL accordingly —
+// see README.md "Going to production" section.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  SUPER_ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(VIEWER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  eventsCreated Event[] @relation("EventCreatedBy")
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  icon      String?
+  events    Event[]
+  createdAt DateTime @default(now())
+}
+
+model Event {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  description   String
+  coverImageUrl String
+  gallery       String   @default("[]") // JSON-encoded array of image URLs
+
+  startDate DateTime
+  endDate   DateTime?
+  venueName String
+  city      String
+  address   String?
+
+  priceLabel       String? // free-text display price, e.g. "מ-80 ש\"ח"
+  affiliateUrl     String // external ticketing / partner URL the click redirects to
+  affiliateNetwork String? // e.g. "Go-Out", "Eventbrite", custom partner name
+
+  status   EventStatus @default(DRAFT)
+  featured Boolean     @default(false)
+
+  metaTitle       String?
+  metaDescription String?
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdById String?
+  createdBy   User?   @relation("EventCreatedBy", fields: [createdById], references: [id])
+
+  clicks ClickLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, startDate])
+  @@index([city])
+}
+
+model ClickLog {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  referer   String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([eventId, createdAt])
+}
