@@ -1,19 +1,20 @@
 import { PrismaClient } from "@/generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-// Dev/default: local SQLite file via better-sqlite3 driver adapter.
-// Production: set DATABASE_URL to a postgres:// connection string and the
-// Postgres adapter is used automatically instead. See README "Going to
-// production" for the exact steps (e.g. Vercel Postgres, Supabase, Neon).
+// Postgres via driver adapter (Prisma 7 requires one explicitly — no
+// implicit connection from the schema file). Accepts DATABASE_URL, or
+// Vercel's Postgres/Neon storage integration var names as a fallback so
+// connecting that integration works without renaming anything.
 function createPrismaClient() {
-  const url = process.env.DATABASE_URL ?? "file:./dev.db";
+  const url = process.env.DATABASE_URL ?? process.env.POSTGRES_PRISMA_URL ?? process.env.POSTGRES_URL;
 
-  if (url.startsWith("postgres://") || url.startsWith("postgresql://")) {
-    return new PrismaClient({ adapter: new PrismaPg({ connectionString: url }) });
+  if (!url) {
+    throw new Error(
+      "DATABASE_URL is not set. Add a Postgres connection string (see README.md 'Database setup').",
+    );
   }
 
-  return new PrismaClient({ adapter: new PrismaBetterSqlite3({ url }) });
+  return new PrismaClient({ adapter: new PrismaPg(url) });
 }
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
