@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0b18;
+  --surface: #15142a;
+  --surface-2: #1e1d3a;
+  --foreground: #f8fafc;
+  --muted: #b4b4c8;
+  --border: rgba(255, 255, 255, 0.09);
+
+  --brand-purple: #7c3aed;
+  --brand-pink: #ec4899;
+  --brand-cta: #f97316;
+  --brand-cta-hover: #fb923c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-pink: var(--brand-pink);
+  --color-cta: var(--brand-cta);
+  --color-cta-hover: var(--brand-cta-hover);
+  --font-heading: var(--font-rubik);
+  --font-body: var(--font-assistant);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 100%);
+}
+
+.hero-glow {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 0%, rgba(124, 58, 237, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(236, 72, 153, 0.18) 0%, transparent 60%);
+}
+
+.card-glow {
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
+  border-color: rgba(236, 72, 153, 0.35);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--brand-pink);
+  color: white;
+}
