@@ -1,7 +1,7 @@
 // Prisma schema for the events promotion / affiliate platform.
-// Dev uses SQLite (file-based, zero setup). For production, switch the
-// datasource provider to "postgresql" and set DATABASE_URL accordingly —
-// see README.md "Going to production" section.
+// Postgres-backed (works on serverless hosts like Vercel, where a local
+// SQLite file can't persist). Set DATABASE_URL to your Postgres connection
+// string — see README.md "Database setup" section.
 
 generator client {
   provider = "prisma-client-js"
@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 enum Role {

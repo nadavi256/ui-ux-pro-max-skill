@@ -10,17 +10,30 @@
 ## סטאק טכנולוגי
 
 - **Next.js 16** (App Router, Turbopack, React 19) — SSR/SSG לביצועי SEO מיטביים
-- **Prisma 7** + SQLite (פיתוח) / PostgreSQL (פרודקשן), עם driver adapters
+- **Prisma 7** + PostgreSQL, עם driver adapter (`@prisma/adapter-pg`)
 - **Auth.js (NextAuth v5)** — אימות מבוסס Credentials + JWT, 3 רמות הרשאה
 - **Tailwind CSS v4** — עיצוב נייטלייף כהה, גרדיאנטים סגול/ורוד/כתום, RTL מלא
 - **Zod** — ולידציה של כל הטפסים בצד שרת
+
+## הגדרת מסד נתונים (Postgres)
+
+האתר דורש Postgres אמיתי (גם בפיתוח מקומי, וגם בפרודקשן) — אין עוד תלות ב-SQLite,
+כי אחסון קבצים מקומי לא עובד על אחסון serverless כמו Vercel. הכי מהיר לקבל מסד
+נתונים חינמי:
+
+- **דרך Vercel**: בפרויקט שלכם ב-Vercel → **Storage** (בתפריט הצד) → **Create
+  Database** → בחרו Postgres (מופעל ע"י Neon) → צרו וחברו לפרויקט. Vercel יוסיף
+  אוטומטית משתני סביבה כמו `POSTGRES_PRISMA_URL` — הקוד קורא אותם אוטומטית גם אם
+  `DATABASE_URL` לא מוגדר (ר' `src/lib/prisma.ts`), אז אין צורך להעתיק כלום ידנית.
+- **או**: [neon.com](https://neon.com) / [supabase.com](https://supabase.com) —
+  הרשמה חינמית, יצירת פרויקט, העתקת ה-connection string לשדה `DATABASE_URL`.
 
 ## הרצה מקומית
 
 ```bash
 npm install
-cp .env.example .env      # ומלאו את הערכים (ברירת המחדל מספיקה לפיתוח מקומי)
-npm run db:migrate        # יוצר את מסד הנתונים המקומי (SQLite) ואת הטבלאות
+cp .env.example .env      # ומלאו DATABASE_URL עם ה-connection string שלכם
+npm run db:push           # יוצר את הטבלאות במסד הנתונים לפי prisma/schema.prisma
 npm run db:seed           # יוצר משתמש Super Admin ראשוני + קטגוריות ואירועי דוגמה
 npm run dev
 ```
@@ -73,15 +86,13 @@ npm run dev
 3. עדכנו את `NEXT_PUBLIC_SITE_URL` בפרודקשן לכתובת הדומיין הסופית (חשוב ל-sitemap,
    מטא-תגיות, ו-JSON-LD).
 
-## מעבר לפרודקשן (מסד נתונים)
+## פרודקשן ומיגרציות
 
-לפיתוח האתר משתמש ב-SQLite מקומי. לפרודקשן מומלץ Postgres מנוהל (Vercel Postgres,
-Supabase, Neon וכו'). המעבר הוא שינוי קונפיגורציה בלבד:
-
-1. ערכו `DATABASE_URL` בסביבת הפרודקשן לכתובת postgres (`postgresql://...`) —
-   `src/lib/prisma.ts` בוחר אוטומטית את ה-driver adapter המתאים (Postgres מול SQLite).
-2. עדכנו את `datasource.provider` ב-`prisma/schema.prisma` ל-`"postgresql"`.
-3. הריצו `npx prisma migrate deploy` מול מסד הפרודקשן.
+תהליך ה-`build` (`npm run build`) מריץ `prisma db push` אוטומטית לפני הבנייה, כך
+שהטבלאות במסד הפרודקשן תמיד מסונכרנות עם `prisma/schema.prisma` בכל דיפלוי. זה
+מספיק כדי לקבל אתר עובד מהר. כשהפרויקט יתייצב ותרצו היסטוריית מיגרציות מסודרת
+(מומלץ לפני שיש הרבה משתמשים/נתונים אמיתיים), אפשר לעבור לזרימת עבודה עם
+`prisma migrate dev` / `prisma migrate deploy` במקום.
 
 ## API ציבורי — הכנה לאפליקציית מובייל (Android / iOS)
 
@@ -114,17 +125,16 @@ src/
   lib/                   שכבת דאטה (events.ts, admin-data.ts), auth, prisma, actions/
   auth.ts, auth.config.ts, proxy.ts   הגדרת האימות (ר' פרק ההרשאות למעלה)
 prisma/
-  schema.prisma, seed.ts, migrations/
+  schema.prisma, seed.ts
 ```
 
 ## פקודות שימושיות
 
 ```bash
 npm run dev          # שרת פיתוח
-npm run build        # בנייה לפרודקשן
+npm run build        # db push + בנייה לפרודקשן
 npm run lint         # ESLint
-npm run db:migrate   # יצירת/עדכון מיגרציות (פיתוח)
-npm run db:deploy    # החלת מיגרציות בפרודקשן
+npm run db:push      # סנכרון הטבלאות במסד לפי schema.prisma (פיתוח)
 npm run db:seed      # זריעת נתוני דוגמה + Super Admin ראשוני
 npm run db:studio    # Prisma Studio — עיון/עריכה ויזואלית של המסד
 ```
