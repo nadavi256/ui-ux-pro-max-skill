@@ -18,7 +18,7 @@ export default async function AdminEventsPage() {
         <h1 className="text-2xl font-extrabold">אירועים</h1>
         <Link
           href="/admin/events/new"
-          className="rounded-full gradient-bg px-5 py-2.5 text-sm font-semibold text-white cursor-pointer"
+          className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground cursor-pointer"
         >
           + אירוע חדש
         </Link>
@@ -27,7 +27,7 @@ export default async function AdminEventsPage() {
       <div className="mt-6 overflow-x-auto rounded-2xl border border-border">
         <table className="w-full min-w-[720px] text-sm">
           <thead>
-            <tr className="border-b border-border bg-surface text-right text-muted">
+            <tr className="border-b border-border bg-card text-right text-muted-foreground">
               <th className="px-4 py-3 font-medium">כותרת</th>
               <th className="px-4 py-3 font-medium">קטגוריה</th>
               <th className="px-4 py-3 font-medium">עיר</th>
@@ -40,15 +40,15 @@ export default async function AdminEventsPage() {
             {events.map((event) => (
               <tr key={event.id} className="border-b border-border last:border-0">
                 <td className="px-4 py-3 font-medium text-foreground">{event.title}</td>
-                <td className="px-4 py-3 text-muted">{event.category.name}</td>
-                <td className="px-4 py-3 text-muted">{event.city}</td>
+                <td className="px-4 py-3 text-muted-foreground">{event.category.name}</td>
+                <td className="px-4 py-3 text-muted-foreground">{event.city}</td>
                 <td className="px-4 py-3">
                   <span className="rounded-full bg-white/5 px-2.5 py-1 text-xs">{STATUS_LABEL[event.status]}</span>
                 </td>
-                <td className="px-4 py-3 text-muted">{event._count.clicks}</td>
+                <td className="px-4 py-3 text-muted-foreground">{event._count.clicks}</td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <Link href={`/admin/events/${event.id}/edit`} className="text-brand-pink hover:underline cursor-pointer">
+                    <Link href={`/admin/events/${event.id}/edit`} className="text-primary hover:underline cursor-pointer">
                       עריכה
                     </Link>
                     <form action={deleteEventAction}>
@@ -61,7 +61,7 @@ export default async function AdminEventsPage() {
             ))}
             {events.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-muted">
+                <td colSpan={6} className="px-4 py-10 text-center text-muted-foreground">
                   אין עדיין אירועים. לחצו על &quot;אירוע חדש&quot; כדי להתחיל.
                 </td>
               </tr>

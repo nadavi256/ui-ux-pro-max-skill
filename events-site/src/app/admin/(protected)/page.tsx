@@ -20,25 +20,25 @@ export default async function AdminDashboardPage() {
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-surface p-6">
+        <div className="rounded-2xl border border-border bg-card p-6">
           <h2 className="text-lg font-bold">קליקים ב-14 הימים האחרונים</h2>
           <div className="mt-6">
             <ClickChart data={timeline} />
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-surface p-6">
+        <div className="rounded-2xl border border-border bg-card p-6">
           <h2 className="text-lg font-bold">האירועים המובילים בקליקים</h2>
           <ul className="mt-4 flex flex-col gap-3">
             {stats.topEvents.map((event) => (
               <li key={event.id} className="flex items-center justify-between text-sm">
-                <Link href={`/admin/events/${event.id}/edit`} className="text-foreground hover:text-brand-pink truncate">
+                <Link href={`/admin/events/${event.id}/edit`} className="text-foreground hover:text-primary truncate">
                   {event.title}
                 </Link>
-                <span className="shrink-0 font-semibold text-brand-pink">{event._count.clicks}</span>
+                <span className="shrink-0 font-semibold text-primary">{event._count.clicks}</span>
               </li>
             ))}
-            {stats.topEvents.length === 0 && <p className="text-sm text-muted">אין עדיין נתוני קליקים.</p>}
+            {stats.topEvents.length === 0 && <p className="text-sm text-muted-foreground">אין עדיין נתוני קליקים.</p>}
           </ul>
         </div>
       </div>

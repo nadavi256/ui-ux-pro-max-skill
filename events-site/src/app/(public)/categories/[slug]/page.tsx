@@ -29,21 +29,19 @@ export default async function CategoryPage(props: PageProps<"/categories/[slug]"
   const events = await getPublishedEvents({ categorySlug: slug });
 
   return (
-    <section className="px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <h1 className="text-3xl font-extrabold sm:text-4xl">{category.name}</h1>
-        <p className="mt-2 text-muted">{events.length} אירועים בקטגוריה זו</p>
+    <div className="mx-auto max-w-6xl px-4 py-16">
+      <h1 className="text-4xl font-black text-foreground sm:text-5xl">{category.name}</h1>
+      <p className="mt-3 text-muted-foreground">{events.length} אירועים בקטגוריה זו</p>
 
-        {events.length === 0 ? (
-          <p className="mt-16 text-center text-muted">אין כרגע אירועים פעילים בקטגוריה זו.</p>
-        ) : (
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {events.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+      {events.length === 0 ? (
+        <p className="mt-16 text-center text-muted-foreground">אין כרגע אירועים פעילים בקטגוריה זו.</p>
+      ) : (
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

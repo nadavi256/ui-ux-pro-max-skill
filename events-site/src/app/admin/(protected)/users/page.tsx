@@ -23,7 +23,7 @@ export default async function AdminUsersPage() {
         <div className="lg:col-span-2 overflow-x-auto rounded-2xl border border-border">
           <table className="w-full min-w-[560px] text-sm">
             <thead>
-              <tr className="border-b border-border bg-surface text-right text-muted">
+              <tr className="border-b border-border bg-card text-right text-muted-foreground">
                 <th className="px-4 py-3 font-medium">שם</th>
                 <th className="px-4 py-3 font-medium">אימייל</th>
                 <th className="px-4 py-3 font-medium">הרשאה</th>
@@ -34,9 +34,9 @@ export default async function AdminUsersPage() {
               {users.map((user) => (
                 <tr key={user.id} className="border-b border-border last:border-0">
                   <td className="px-4 py-3 font-medium text-foreground">
-                    {user.name} {user.id === currentUser.id && <span className="text-xs text-muted">(את/ה)</span>}
+                    {user.name} {user.id === currentUser.id && <span className="text-xs text-muted-foreground">(את/ה)</span>}
                   </td>
-                  <td className="px-4 py-3 text-muted">{user.email}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{user.email}</td>
                   <td className="px-4 py-3">
                     {user.id === currentUser.id ? (
                       ROLE_LABEL[user.role]
@@ -61,7 +61,7 @@ export default async function AdminUsersPage() {
           </table>
         </div>
 
-        <div className="rounded-2xl border border-border bg-surface p-6">
+        <div className="rounded-2xl border border-border bg-card p-6">
           <h2 className="text-lg font-bold">משתמש חדש</h2>
           <div className="mt-4">
             <UserForm />

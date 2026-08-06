@@ -49,14 +49,14 @@ const emptyDefaults: EventFormDefaults = {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-sm font-medium text-muted">{label}</span>
+      <span className="text-sm font-medium text-muted-foreground">{label}</span>
       {children}
     </label>
   );
 }
 
 const inputClass =
-  "w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:border-brand-pink focus:outline-none";
+  "w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none";
 
 export function EventForm({
   action,
@@ -156,7 +156,7 @@ export function EventForm({
         </Field>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-muted">
+      <label className="flex items-center gap-2 text-sm text-muted-foreground">
         <input type="checkbox" name="featured" defaultChecked={defaults.featured} className="h-4 w-4 cursor-pointer" />
         סמנו כאירוע מומלץ (יוצג בדף הבית)
       </label>
@@ -173,7 +173,7 @@ export function EventForm({
       <button
         type="submit"
         disabled={pending}
-        className="mt-2 w-fit rounded-full gradient-bg px-6 py-3 text-sm font-bold text-white disabled:opacity-50 cursor-pointer"
+        className="mt-2 w-fit rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground disabled:opacity-50 cursor-pointer"
       >
         {pending ? "שומר..." : submitLabel}
       </button>

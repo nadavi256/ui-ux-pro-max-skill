@@ -11,9 +11,9 @@ export default async function AdminAnalyticsPage() {
   return (
     <div>
       <h1 className="text-2xl font-extrabold">אנליטיקס קליקים</h1>
-      <p className="mt-2 text-muted">סה״כ {totalClicks} קליקים לאתרי שותפים מתחילת הפעילות.</p>
+      <p className="mt-2 text-muted-foreground">סה״כ {totalClicks} קליקים לאתרי שותפים מתחילת הפעילות.</p>
 
-      <div className="mt-6 rounded-2xl border border-border bg-surface p-6">
+      <div className="mt-6 rounded-2xl border border-border bg-card p-6">
         <h2 className="text-lg font-bold">קליקים ב-30 הימים האחרונים</h2>
         <div className="mt-6">
           <ClickChart data={timeline} />
@@ -23,7 +23,7 @@ export default async function AdminAnalyticsPage() {
       <div className="mt-8 overflow-x-auto rounded-2xl border border-border">
         <table className="w-full min-w-[560px] text-sm">
           <thead>
-            <tr className="border-b border-border bg-surface text-right text-muted">
+            <tr className="border-b border-border bg-card text-right text-muted-foreground">
               <th className="px-4 py-3 font-medium">אירוע</th>
               <th className="px-4 py-3 font-medium">עיר</th>
               <th className="px-4 py-3 font-medium">קליקים</th>
@@ -33,12 +33,12 @@ export default async function AdminAnalyticsPage() {
             {sorted.map((event) => (
               <tr key={event.id} className="border-b border-border last:border-0">
                 <td className="px-4 py-3 font-medium text-foreground">
-                  <Link href={`/admin/events/${event.id}/edit`} className="hover:text-brand-pink">
+                  <Link href={`/admin/events/${event.id}/edit`} className="hover:text-primary">
                     {event.title}
                   </Link>
                 </td>
-                <td className="px-4 py-3 text-muted">{event.city}</td>
-                <td className="px-4 py-3 font-semibold text-brand-pink">{event._count.clicks}</td>
+                <td className="px-4 py-3 text-muted-foreground">{event.city}</td>
+                <td className="px-4 py-3 font-semibold text-primary">{event._count.clicks}</td>
               </tr>
             ))}
           </tbody>

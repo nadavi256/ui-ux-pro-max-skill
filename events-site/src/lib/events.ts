@@ -84,6 +84,15 @@ export async function getCategoryBySlug(slug: string) {
   return prisma.category.findUnique({ where: { slug } });
 }
 
+export async function getPastEvents(take = 6) {
+  return prisma.event.findMany({
+    where: { status: "PUBLISHED", startDate: { lt: new Date() } },
+    orderBy: { startDate: "desc" },
+    take,
+    select: publicEventSelect(),
+  });
+}
+
 export async function getAllPublishedSlugs() {
   const rows = await prisma.event.findMany({
     where: { status: "PUBLISHED" },
