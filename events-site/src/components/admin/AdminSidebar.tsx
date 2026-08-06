@@ -20,11 +20,11 @@ export function AdminSidebar({ userName, userRole }: { userName: string; userRol
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-full shrink-0 flex-col border-b border-border bg-surface p-4 sm:w-64 sm:min-h-screen sm:border-b-0 sm:border-l">
-      <Link href="/admin" className="text-lg font-extrabold gradient-text">
+    <aside className="flex w-full shrink-0 flex-col border-b border-border bg-card p-4 sm:w-64 sm:min-h-screen sm:border-b-0 sm:border-l">
+      <Link href="/admin" className="text-lg font-extrabold text-primary">
         {siteConfig.name}
       </Link>
-      <p className="mt-1 text-xs text-muted">פאנל ניהול</p>
+      <p className="mt-1 text-xs text-muted-foreground">פאנל ניהול</p>
 
       <nav className="mt-6 flex flex-1 flex-col gap-1" aria-label="ניווט ניהול">
         {NAV_ITEMS.filter((item) => ROLE_RANK[userRole] >= ROLE_RANK[item.minRole]).map((item) => {
@@ -34,7 +34,7 @@ export function AdminSidebar({ userName, userRole }: { userName: string; userRol
               key={item.href}
               href={item.href}
               className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors cursor-pointer ${
-                active ? "bg-cta text-white" : "text-muted hover:bg-white/5 hover:text-foreground"
+                active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
               }`}
             >
               {item.label}
@@ -45,9 +45,9 @@ export function AdminSidebar({ userName, userRole }: { userName: string; userRol
 
       <div className="mt-6 border-t border-border pt-4">
         <p className="text-sm font-medium text-foreground">{userName}</p>
-        <p className="text-xs text-muted">{ROLE_LABEL[userRole]}</p>
+        <p className="text-xs text-muted-foreground">{ROLE_LABEL[userRole]}</p>
         <form action={logoutAction}>
-          <button type="submit" className="mt-3 text-sm font-medium text-brand-pink hover:underline cursor-pointer">
+          <button type="submit" className="mt-3 text-sm font-medium text-primary hover:underline cursor-pointer">
             התנתקות
           </button>
         </form>

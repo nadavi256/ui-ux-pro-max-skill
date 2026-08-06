@@ -72,7 +72,7 @@ export default async function EventDetailPage(props: PageProps<"/events/[slug]">
       />
 
       <div className="mx-auto max-w-4xl">
-        <nav className="mb-6 text-sm text-muted" aria-label="פירורי לחם">
+        <nav className="mb-6 text-sm text-muted-foreground" aria-label="פירורי לחם">
           <Link href="/" className="hover:text-foreground">
             דף הבית
           </Link>{" "}
@@ -83,34 +83,34 @@ export default async function EventDetailPage(props: PageProps<"/events/[slug]">
           / <span className="text-foreground">{event.title}</span>
         </nav>
 
-        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-primary/30 via-secondary to-background">
           <Image src={event.coverImageUrl} alt={event.title} fill priority className="object-cover" />
         </div>
 
         <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <span className="rounded-full gradient-bg px-3 py-1 text-xs font-semibold text-white">
+            <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
               {event.category.name}
             </span>
-            <h1 className="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl">{event.title}</h1>
-            <p className="mt-3 text-brand-pink font-semibold">{formatEventDate(event.startDate, event.endDate)}</p>
-            <p className="mt-1 text-muted">
+            <h1 className="mt-4 text-3xl font-black leading-tight sm:text-4xl">{event.title}</h1>
+            <p className="mt-3 font-semibold text-primary">{formatEventDate(event.startDate, event.endDate)}</p>
+            <p className="mt-1 text-muted-foreground">
               {event.venueName} · {event.city}
               {event.address ? ` · ${event.address}` : ""}
             </p>
           </div>
 
-          <div className="w-full rounded-2xl border border-border bg-surface p-6 sm:w-72">
-            <p className="text-sm text-muted">מחיר</p>
-            <p className="mt-1 text-2xl font-extrabold">{event.priceLabel ?? "פרטי מחיר באתר השותף"}</p>
+          <div className="w-full rounded-2xl border border-border/60 bg-card p-6 sm:w-72">
+            <p className="text-sm text-muted-foreground">מחיר</p>
+            <p className="mt-1 text-2xl font-black">{event.priceLabel ?? "פרטי מחיר באתר השותף"}</p>
             <a
               href={`/out/${event.slug}`}
               rel="sponsored nofollow noopener"
-              className="mt-5 flex w-full items-center justify-center rounded-full bg-cta px-6 py-4 text-base font-bold text-white shadow-lg shadow-orange-900/30 transition-transform hover:scale-105 hover:bg-cta-hover cursor-pointer"
+              className="mt-5 flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-base font-bold text-primary-foreground transition-opacity hover:opacity-90 cursor-pointer"
             >
               לרכישת כרטיסים ←
             </a>
-            <p className="mt-3 text-center text-xs text-muted">
+            <p className="mt-3 text-center text-xs text-muted-foreground">
               הקישור מפנה לאתר השותף החיצוני המפעיל את המכירה בפועל.
             </p>
           </div>

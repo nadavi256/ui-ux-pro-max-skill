@@ -15,17 +15,17 @@ export function CategoryForm() {
     <form ref={formRef} action={action} className="flex flex-col gap-4">
       {state.error && <p className="text-sm text-red-400">{state.error}</p>}
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-muted">שם הקטגוריה</span>
+        <span className="text-sm font-medium text-muted-foreground">שם הקטגוריה</span>
         <input
           name="name"
           required
-          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:border-brand-pink focus:outline-none"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
         />
       </label>
       <button
         type="submit"
         disabled={pending}
-        className="w-fit rounded-full gradient-bg px-5 py-2.5 text-sm font-bold text-white disabled:opacity-50 cursor-pointer"
+        className="w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground disabled:opacity-50 cursor-pointer"
       >
         {pending ? "מוסיף..." : "הוספת קטגוריה"}
       </button>

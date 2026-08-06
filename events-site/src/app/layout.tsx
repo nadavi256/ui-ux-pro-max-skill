@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Assistant, Rubik } from "next/font/google";
+import { Assistant, Heebo } from "next/font/google";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
-const rubik = Rubik({
-  variable: "--font-rubik",
+const heebo = Heebo({
+  variable: "--font-heebo",
   subsets: ["latin", "hebrew"],
   weight: ["400", "500", "600", "700", "800", "900"],
 });
@@ -12,7 +12,7 @@ const rubik = Rubik({
 const assistant = Assistant({
   variable: "--font-assistant",
   subsets: ["latin", "hebrew"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="he"
       dir="rtl"
-      className={`${rubik.variable} ${assistant.variable} h-full antialiased`}
+      className={`${heebo.variable} ${assistant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script

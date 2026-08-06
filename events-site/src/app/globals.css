@@ -1,36 +1,42 @@
 @import "tailwindcss";
 
+/* Design system replicated 1:1 from plusparty.co.il — dark nightlife
+   palette with a gold accent. Values are their exact oklch tokens. */
 :root {
-  --background: #0b0b18;
-  --surface: #15142a;
-  --surface-2: #1e1d3a;
-  --foreground: #f8fafc;
-  --muted: #b4b4c8;
-  --border: rgba(255, 255, 255, 0.09);
-
-  --brand-purple: #7c3aed;
-  --brand-pink: #ec4899;
-  --brand-cta: #f97316;
-  --brand-cta-hover: #fb923c;
+  --radius: 0.75rem;
+  --background: oklch(0.16 0.02 265);
+  --foreground: oklch(0.97 0.005 260);
+  --card: oklch(0.21 0.025 265);
+  --primary: oklch(0.82 0.15 85);
+  --primary-foreground: oklch(0.18 0.02 265);
+  --secondary: oklch(0.28 0.03 265);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --border: oklch(0.3 0.02 265);
+  --ring: oklch(0.82 0.15 85);
+  --destructive: oklch(0.62 0.22 27);
 }
 
 @theme inline {
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
   --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --color-brand-purple: var(--brand-purple);
-  --color-brand-pink: var(--brand-pink);
-  --color-cta: var(--brand-cta);
-  --color-cta-hover: var(--brand-cta-hover);
-  --font-heading: var(--font-rubik);
-  --font-body: var(--font-assistant);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --font-sans: var(--font-heebo), var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heebo), var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
   box-sizing: border-box;
+  border-color: var(--color-border);
 }
 
 html {
@@ -39,9 +45,10 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body), sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -50,34 +57,15 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading), sans-serif;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-purple) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-bg {
-  background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 100%);
-}
-
-.hero-glow {
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 0%, rgba(124, 58, 237, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(236, 72, 153, 0.18) 0%, transparent 60%);
-}
-
-.card-glow {
-  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
-}
-
-.card-glow:hover {
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
-  border-color: rgba(236, 72, 153, 0.35);
-  transform: translateY(-2px);
+:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -92,6 +80,6 @@ h6 {
 }
 
 ::selection {
-  background: var(--brand-pink);
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
 }

@@ -20,7 +20,7 @@ export default async function AdminCategoriesPage() {
           <div className="overflow-x-auto rounded-2xl border border-border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border bg-surface text-right text-muted">
+                <tr className="border-b border-border bg-card text-right text-muted-foreground">
                   <th className="px-4 py-3 font-medium">שם</th>
                   <th className="px-4 py-3 font-medium">כתובת (slug)</th>
                   <th className="px-4 py-3 font-medium">אירועים</th>
@@ -31,8 +31,8 @@ export default async function AdminCategoriesPage() {
                 {categories.map((category) => (
                   <tr key={category.id} className="border-b border-border last:border-0">
                     <td className="px-4 py-3 font-medium text-foreground">{category.name}</td>
-                    <td className="px-4 py-3 text-muted">/{category.slug}</td>
-                    <td className="px-4 py-3 text-muted">{countByCategory.get(category.id) ?? 0}</td>
+                    <td className="px-4 py-3 text-muted-foreground">/{category.slug}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{countByCategory.get(category.id) ?? 0}</td>
                     <td className="px-4 py-3">
                       <form action={deleteCategoryAction}>
                         <input type="hidden" name="id" value={category.id} />
@@ -43,7 +43,7 @@ export default async function AdminCategoriesPage() {
                 ))}
                 {categories.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="px-4 py-10 text-center text-muted">
+                    <td colSpan={4} className="px-4 py-10 text-center text-muted-foreground">
                       אין עדיין קטגוריות.
                     </td>
                   </tr>
@@ -53,7 +53,7 @@ export default async function AdminCategoriesPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-surface p-6">
+        <div className="rounded-2xl border border-border bg-card p-6">
           <h2 className="text-lg font-bold">קטגוריה חדשה</h2>
           <div className="mt-4">
             <CategoryForm />

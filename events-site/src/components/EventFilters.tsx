@@ -38,7 +38,7 @@ export function EventFilters({ categories, cities }: { categories: Category[]; c
           defaultValue={searchParams.get("q") ?? ""}
           placeholder="חיפוש לפי שם, אולם או עיר..."
           onChange={(e) => updateParam("q", e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-brand-pink focus:outline-none"
+          className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
         />
       </label>
 
@@ -47,7 +47,7 @@ export function EventFilters({ categories, cities }: { categories: Category[]; c
         <select
           defaultValue={searchParams.get("city") ?? ""}
           onChange={(e) => updateParam("city", e.target.value)}
-          className="w-full cursor-pointer rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground focus:border-brand-pink focus:outline-none"
+          className="w-full cursor-pointer rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground focus:border-primary focus:outline-none"
         >
           <option value="">כל הערים</option>
           {cities.map((city) => (
@@ -63,7 +63,7 @@ export function EventFilters({ categories, cities }: { categories: Category[]; c
         <select
           defaultValue={searchParams.get("category") ?? ""}
           onChange={(e) => updateParam("category", e.target.value)}
-          className="w-full cursor-pointer rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground focus:border-brand-pink focus:outline-none"
+          className="w-full cursor-pointer rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground focus:border-primary focus:outline-none"
         >
           <option value="">כל הקטגוריות</option>
           {categories.map((category) => (
