@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { syncPlusPartyEvents } from "@/lib/plusparty-sync";
 
 // Protected sync endpoint for pulling events from the user's other
-// (Lovable/Supabase) events site into EventHub. Upserts by externalId, so
+// (Lovable/Supabase) events site into this site. Upserts by externalId, so
 // it's safe to call repeatedly — each call re-applies the snapshot embedded
 // in src/lib/plusparty-sync.ts. See the "PlusParty sync" Routine for how
 // that snapshot gets refreshed and this endpoint re-triggered on a schedule.
