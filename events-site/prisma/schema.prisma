@@ -53,6 +53,11 @@ model Event {
   coverImageUrl String
   gallery       String   @default("[]") // JSON-encoded array of image URLs
 
+  // Set when this event was created by an automated sync (e.g. "plusparty:<id>")
+  // rather than a person in the admin panel. Used to upsert on re-sync
+  // without duplicating or clobbering manually-created events.
+  externalId String? @unique
+
   startDate DateTime
   endDate   DateTime?
   venueName String
