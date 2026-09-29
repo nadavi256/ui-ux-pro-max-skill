@@ -1,0 +1,134 @@
+// Prisma schema for the second-hand marketplace (Metzia).
+// Postgres-backed so it runs on serverless hosts (Vercel) too.
+// Set DATABASE_URL — see README.md.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ListingStatus {
+  ACTIVE
+  SOLD
+  HIDDEN
+}
+
+enum Condition {
+  NEW
+  LIKE_NEW
+  USED
+  NEEDS_REPAIR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String?
+  city         String?
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+
+  listings      Listing[]
+  favorites     Favorite[]
+  buyerConvos   Conversation[] @relation("BuyerConversations")
+  messages      Message[]
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  name     String
+  icon     String    // lucide icon name, see src/components/CategoryIcon.tsx
+  order    Int       @default(0)
+  listings Listing[]
+}
+
+model Listing {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  price       Int           // whole shekels; 0 = free ("למסירה")
+  condition   Condition     @default(USED)
+  city        String
+  status      ListingStatus @default(ACTIVE)
+  views       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  sellerId   String
+  seller     User     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  images        ListingImage[]
+  favorites     Favorite[]
+  conversations Conversation[]
+
+  @@index([status, createdAt])
+  @@index([categoryId, status])
+  @@index([sellerId])
+}
+
+// Either an external URL (seed data) or the uploaded bytes themselves,
+// served from /api/images/[id]. Keeps uploads working with zero extra
+// storage configuration.
+model ListingImage {
+  id        String  @id @default(cuid())
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  url       String?
+  data      Bytes?
+  mime      String?
+  order     Int     @default(0)
+
+  @@index([listingId, order])
+}
+
+model Favorite {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, listingId])
+}
+
+// One conversation per (listing, buyer). The seller is listing.seller.
+model Conversation {
+  id        String   @id @default(cuid())
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  buyerId   String
+  buyer     User     @relation("BuyerConversations", fields: [buyerId], references: [id], onDelete: Cascade)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  messages Message[]
+
+  @@unique([listingId, buyerId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body           String
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId, createdAt])
+}

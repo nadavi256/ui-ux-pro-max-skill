@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* Metzia design system (generated with ui-ux-pro-max: "Marketplace /
+   Directory" pattern). Trust violet for brand + transaction green for the
+   primary "post / contact" actions. All text/background pairs ≥ 4.5:1. */
+:root {
+  --radius: 0.875rem;
+  --background: #f7f6fb;
+  --foreground: #1c1a29;
+  --card: #ffffff;
+  --muted: #f0eef6;
+  --muted-foreground: #5b5670;
+  --primary: #6d28d9;
+  --primary-hover: #5b21b6;
+  --primary-soft: #ede9fe;
+  --primary-foreground: #ffffff;
+  --cta: #15803d;
+  --cta-hover: #166534;
+  --cta-foreground: #ffffff;
+  --border: #e4e1ee;
+  --ring: #7c3aed;
+  --destructive: #dc2626;
+  --warning: #b45309;
+}
+
+@theme inline {
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-cta-foreground: var(--cta-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  border-color: var(--color-border);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+button,
+[role="button"],
+a,
+label[for],
+select,
+summary {
+  cursor: pointer;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
