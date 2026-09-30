@@ -33,7 +33,7 @@ cd marketplace
 npm install
 cp .env.example .env        # מלאו DATABASE_URL ו-AUTH_SECRET
 npm run db:push             # יצירת הטבלאות
-npm run db:seed             # קטגוריות + 18 מודעות דמו + משתמש מנהל
+npm run db:seed             # קטגוריות + 18 מודעות דמו (+ מנהל אם הוגדר SEED_ADMIN_PASSWORD)
 npm run dev
 ```
 
@@ -46,7 +46,7 @@ npm run dev
 1. New Project → בחרו את ה-repo → **Root Directory: `marketplace`**.
 2. Storage → Create Database → Postgres (Neon) וחברו לפרויקט (משתני `POSTGRES_*` נקלטים אוטומטית).
 3. הוסיפו `AUTH_SECRET` ו-`NEXT_PUBLIC_SITE_URL`.
-4. Deploy — `npm run build` מריץ `prisma db push` ויוצר את הטבלאות.
+4. Deploy — `npm run build` מריץ `prisma db push` (יצירת טבלאות) ו-seed (קטגוריות ומודעות דמו, פעם אחת בלבד).
 
 ## השלבים הבאים (הצעה)
 

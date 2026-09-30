@@ -49,13 +49,17 @@ async function main() {
   }
   const categories = Object.fromEntries((await prisma.category.findMany()).map((c) => [c.slug, c.id]));
 
-  const adminEmail = (process.env.SEED_ADMIN_EMAIL ?? "admin@example.com").toLowerCase();
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe123!";
-  await prisma.user.upsert({
-    where: { email: adminEmail },
-    create: { email: adminEmail, name: "מנהל", role: "ADMIN", passwordHash: await bcrypt.hash(adminPassword, 10) },
-    update: {},
-  });
+  // Admin is created only when a password is configured explicitly, so a
+  // public deployment never ends up with a well-known admin password.
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  if (adminPassword) {
+    const adminEmail = (process.env.SEED_ADMIN_EMAIL ?? "admin@example.com").toLowerCase();
+    await prisma.user.upsert({
+      where: { email: adminEmail },
+      create: { email: adminEmail, name: "מנהל", role: "ADMIN", passwordHash: await bcrypt.hash(adminPassword, 10) },
+      update: {},
+    });
+  }
 
   const demoHash = await bcrypt.hash("Demo12345!", 10);
   const sellers = await Promise.all(
